@@ -1,6 +1,7 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 #include "Header/level.hpp"
+#include "Header/menu.hpp"
 #include <SDL.h>
 #include <SDL_image.h>
 class Game{
@@ -19,6 +20,7 @@ class Game{
         void update();
         void render();
         void cleanup();
+        void ingameProcessEvents(SDL_Event& event);
     private:
         SDL_Window* window = nullptr;
         SDL_Renderer* renderer = nullptr;
@@ -30,7 +32,8 @@ class Game{
         SDL_Texture* obstacleTexture3 = nullptr;
         SDL_Texture* arrowTexture = nullptr;
 
-
+        Menu menu;
+        MenuState menuState;
         float ballX, ballY, velocityX, velocityY, ballScale;
         float holeX, holeY;
         bool dragging;
