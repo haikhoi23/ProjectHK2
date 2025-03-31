@@ -13,7 +13,7 @@ Game::Game()
     ballY = 300;
     velocityX = 0;
     velocityY = 0;
-    MAX_VELOCITY = 30.0f;
+    MAX_VELOCITY = 25.0f;
     ballScale = 1.0f;
     holeX = 700;
     holeY = 300;
@@ -155,6 +155,10 @@ void Game::processEvents()
         if (menuState == MenuState::MAIN_MENU)
         {
             menuState = menu.processEvents(event);
+        }
+        if (menuState == MenuState::EXIT)
+        {
+            exit(0);
         }
         else
         {

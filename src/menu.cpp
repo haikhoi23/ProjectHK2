@@ -12,8 +12,8 @@ Menu::Menu()
     exitbuttonTexture = nullptr;
     playbuttonPressedTexture = nullptr;
     exitbuttonPressedTexture = nullptr;
-    playButtonRect = {316, 300, 168, 88};
-    exitButtonRect = {316, 450, 168, 88};
+    playButtonRect = {316, 300, 168, 112};
+    exitButtonRect = {316, 450, 168, 112};
     playButtonPressed = false;
     exitButtonPressed = false;
 }
