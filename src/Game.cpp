@@ -26,7 +26,7 @@ Game::Game()
 
 Game::~Game() {}
 
-//hàm này dùng để khởi tạo đối tượng đồ họa game cùng các level
+// hàm này dùng để khởi tạo đối tượng đồ họa game cùng các level
 bool Game::init()
 {
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
@@ -77,7 +77,7 @@ bool Game::init()
     return true;
 }
 
-//hàm này dùng để khởi tạo game
+// hàm này dùng để khởi tạo game
 void Game::run()
 {
     bool quit = false;
@@ -90,7 +90,7 @@ void Game::run()
     }
 }
 
-//hàm này dùng để giải phóng bộ nhớ và các tài nguyên đã sử dụng trong game
+// hàm này dùng để giải phóng bộ nhớ và các tài nguyên đã sử dụng trong game
 void Game::cleanup()
 {
     SDL_DestroyTexture(ballTexture);
@@ -105,7 +105,7 @@ void Game::cleanup()
     Renderer::cleanup(window, renderer);
 }
 
-//hàm này dùng để xử lý các sự kiện trong game
+// hàm này dùng để xử lý các sự kiện trong game
 void Game::ingameProcessEvents(SDL_Event &event)
 {
     if (event.type == SDL_QUIT)
@@ -130,7 +130,7 @@ void Game::ingameProcessEvents(SDL_Event &event)
         float magnitude = sqrt(dx * dx + dy * dy);
 
         const float MAGNITUDE_THRESHOLD = 5.0f;
-        //Nếu đỘ dài của vector lớn hơn 5 thì sẽ tính toán góc của vector và gán cho góc mũi tên
+        // Nếu đỘ dài của vector lớn hơn 5 thì sẽ tính toán góc của vector và gán cho góc mũi tên
         if (magnitude >= MAGNITUDE_THRESHOLD)
         {
             arrowAngle = atan2(-dy, -dx) * 180 / M_PI;
@@ -146,7 +146,7 @@ void Game::ingameProcessEvents(SDL_Event &event)
     }
 }
 
-//hàm này dùng để xử lý các sự kiện trong game
+// hàm này dùng để xử lý các sự kiện trong game
 void Game::processEvents()
 {
     SDL_Event event;
@@ -163,14 +163,18 @@ void Game::processEvents()
     }
 }
 
-//hàm này dùng để cập nhật vị trí của bóng và xử lý va chạm giữa bóng và các đối tượng khác trong game
+// hàm này dùng để cập nhật vị trí của bóng và xử lý va chạm giữa bóng và các đối tượng khác trong game
 void Game::update()
 {
-    //Giới hạn tốc độ của bóng
-    if (velocityX > MAX_VELOCITY) velocityX = MAX_VELOCITY;
-    if (velocityX < -MAX_VELOCITY) velocityX = -MAX_VELOCITY;
-    if (velocityY > MAX_VELOCITY) velocityY = MAX_VELOCITY;
-    if (velocityY < -MAX_VELOCITY) velocityY = -MAX_VELOCITY;
+    // Giới hạn tốc độ của bóng
+    if (velocityX > MAX_VELOCITY)
+        velocityX = MAX_VELOCITY;
+    if (velocityX < -MAX_VELOCITY)
+        velocityX = -MAX_VELOCITY;
+    if (velocityY > MAX_VELOCITY)
+        velocityY = MAX_VELOCITY;
+    if (velocityY < -MAX_VELOCITY)
+        velocityY = -MAX_VELOCITY;
 
     ballX = ballX + velocityX;
     ballY = ballY + velocityY;
@@ -210,7 +214,7 @@ void Game::update()
     }
 }
 
-//hàm này dùng để render các đối tượng trong game
+// hàm này dùng để render các đối tượng trong game
 void Game::render()
 {
     if (menuState == MenuState::MAIN_MENU)
@@ -255,8 +259,8 @@ void Game::render()
     SDL_RenderPresent(renderer);
 }
 
-//hàm này dùng để xử lý va chạm giữa bóng và tường
-//nếu bóng va chạm với tường thì bóng sẽ dội lại theo hướng ngược lại
+// hàm này dùng để xử lý va chạm giữa bóng và tường
+// nếu bóng va chạm với tường thì bóng sẽ dội lại theo hướng ngược lại
 void Game::wallCollision()
 {
 
@@ -284,8 +288,8 @@ void Game::wallCollision()
         velocityY = -velocityY * BOUNCE;
     }
 }
-//hàm này dùng để xử lý va chạm giữa bóng và lỗ
-//nếu bóng va chạm với lỗ và tốc độ của bóng nhỏ hơn 5 thì bóng sẽ vào lỗ
+// hàm này dùng để xử lý va chạm giữa bóng và lỗ
+// nếu bóng va chạm với lỗ và tốc độ của bóng nhỏ hơn 5 thì bóng sẽ vào lỗ
 void Game::holeCollision()
 {
     float ballCenterX = ballX + (BALL_WIDTH * ballScale) / 2;
@@ -323,7 +327,7 @@ void Game::holeCollision()
         }
     }
 }
-//hàm này dùng để xử lý va chạm giữa bóng và các chướng ngại vật
+// hàm này dùng để xử lý va chạm giữa bóng và các chướng ngại vật
 void Game::obstacleCollision()
 {
     for (auto &obs : levels[currentLevel].getObstacles())
@@ -364,90 +368,129 @@ void Game::obstacleCollision()
         }
     }
 }
-//hàm này dùng để load các level vào game
-//các level được lưu trong vector levels, mỗi level là một đối tượng của class Level
+// hàm này dùng để load các level vào game
+// các level được lưu trong vector levels, mỗi level là một đối tượng của class Level
 void Game::loadLevels()
 {
     levels.clear();
-    //level 1
+    // level 1
     std::vector<Obstacle> rectangleObstacles;
 
-    int rectX = (SCREEN_WIDTH - 608) / 2; 
-    int rectY = (SCREEN_HEIGHT - 200) / 2; 
+    int rectX = (SCREEN_WIDTH - 608) / 2;
+    int rectY = (SCREEN_HEIGHT - 200) / 2;
     int rectWidth = 608;
     int rectHeight = 288;
 
-    for (int x = rectX; x < rectX + rectWidth; x += 32) {
+    for (int x = rectX; x < rectX + rectWidth; x += 32)
+    {
         rectangleObstacles.push_back({x, rectY, 32, 32, obstacleTexture2});
     }
 
-    for (int x = rectX; x < rectX + rectWidth; x += 32) {
+    for (int x = rectX; x < rectX + rectWidth; x += 32)
+    {
         rectangleObstacles.push_back({x, rectY + rectHeight - 32, 32, 32, obstacleTexture2});
     }
 
-    for (int y = rectY; y < rectY + rectHeight - 32; y += 32) {
+    for (int y = rectY; y < rectY + rectHeight - 32; y += 32)
+    {
         rectangleObstacles.push_back({rectX, y, 32, 32, obstacleTexture2});
     }
 
-    for (int y = rectY; y < rectY + rectHeight - 32; y += 32) {
+    for (int y = rectY; y < rectY + rectHeight - 32; y += 32)
+    {
         rectangleObstacles.push_back({rectX + rectWidth - 32, y, 32, 32, obstacleTexture2});
     }
 
     levels.push_back(Level(
-        {rectX + 100, 325}, 
-        rectangleObstacles, 
-        {rectX + rectWidth - 100, 325} 
-    ));
+        {rectX + 100, 325},
+        rectangleObstacles,
+        {rectX + rectWidth - 100, 325}));
 
-    //level 2
-    std::vector<Obstacle> circularObstacles;
-    int centerX = SCREEN_WIDTH / 2;
-    int centerY = SCREEN_HEIGHT / 2;
-    int radius = 150;
-    for (int angle = 0; angle < 360; angle += 45) {
-        int x = centerX + radius * cos(angle * M_PI / 180) - 32;
-        int y = centerY + radius * sin(angle * M_PI / 180) - 32;
-        circularObstacles.push_back({x, y, 64, 67, obstacleTexture4});
-    }
-    levels.push_back(Level(
-        {400, 550}, 
-        circularObstacles, 
-        {400, 300}
-    ));
-
-    //level 3
-    std::vector<Obstacle> checkerboardObstacles;
-    for (int x = 100; x < SCREEN_WIDTH - 100; x += 64) {
-        for (int y = 100; y < SCREEN_HEIGHT - 100; y += 67) {
-            if ((x / 64 + y / 67) % 2 == 0) {
-                checkerboardObstacles.push_back({x, y, 32, 35, obstacleTexture2});
-            }
-        }
-    }
-    levels.push_back(Level(
-        {150, 150}, 
-        checkerboardObstacles, 
-        {SCREEN_WIDTH - 150, SCREEN_HEIGHT - 150}
-    ));
-
-    //level 4
+    // level 2
     std::vector<Obstacle> zigzagObstacles;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; i++)
+    {
         int x = 100 + i * 64;
         int y = (i % 2 == 0) ? 200 : 300;
         zigzagObstacles.push_back({x, y, 64, 67, obstacleTexture1});
     }
     levels.push_back(Level(
-        {150, 250}, 
-        zigzagObstacles, 
-        {700, 275}
-    ));
+        {150, 250},
+        zigzagObstacles,
+        {700, 275}));
+    // level 3
+    std::vector<Obstacle> circularObstacles;
+    int centerX = SCREEN_WIDTH / 2;
+    int centerY = SCREEN_HEIGHT / 2;
+    int radius = 150;
+    for (int angle = 0; angle < 360; angle += 45)
+    {
+        int x = centerX + radius * cos(angle * M_PI / 180) - 32;
+        int y = centerY + radius * sin(angle * M_PI / 180) - 32;
+        circularObstacles.push_back({x, y, 64, 67, obstacleTexture4});
+    }
+    levels.push_back(Level(
+        {400, 550},
+        circularObstacles,
+        {400, 300}));
 
-    if (!obstacleTexture1 || !obstacleTexture2 || !obstacleTexture3 || !obstacleTexture4) {
+    // level 4
+    std::vector<Obstacle> checkerboardObstacles;
+    for (int x = 100; x < SCREEN_WIDTH - 100; x += 64)
+    {
+        for (int y = 100; y < SCREEN_HEIGHT - 100; y += 67)
+        {
+            if ((x / 64 + y / 67) % 2 == 0)
+            {
+                checkerboardObstacles.push_back({x, y, 32, 35, obstacleTexture2});
+            }
+        }
+    }
+    levels.push_back(Level(
+        {150, 150},
+        checkerboardObstacles,
+        {SCREEN_WIDTH - 150, SCREEN_HEIGHT - 150}));
+
+    // level 5
+    levels.push_back(Level(
+        {70, 300},
+        {{200, 0, 64, 67, obstacleTexture1},
+         {200, 70, 64, 67, obstacleTexture1},
+         {200, 140, 64, 67, obstacleTexture1},
+         {200, 400, 64, 67, obstacleTexture1},
+         {200, 468, 64, 67, obstacleTexture1},
+         {200, 530, 64, 67, obstacleTexture1},
+         {270, 185, 64, 67, obstacleTexture1},
+         {330, 145, 64, 67, obstacleTexture4},
+         {395, 121, 64, 67, obstacleTexture1},
+         {465, 100, 64, 67, obstacleTexture4},
+         {260, 380, 64, 67, obstacleTexture4},
+         {330, 335, 64, 67, obstacleTexture1},
+         {400, 305, 64, 67, obstacleTexture4},
+         {460, 270, 64, 67, obstacleTexture4},
+         {300, 245, 32, 35, obstacleTexture2},
+         {395, 270, 32, 35, obstacleTexture3},
+         {420, 185, 32, 35, obstacleTexture2},
+         {540, 75, 32, 35, obstacleTexture3},
+         {540, 40, 32, 35, obstacleTexture2},
+         {575, 40, 32, 35, obstacleTexture3},
+         {610, 40, 32, 35, obstacleTexture2},
+         {645, 40, 32, 35, obstacleTexture3},
+         {645, 80, 32, 35, obstacleTexture2},
+         {645, 115, 32, 35, obstacleTexture3},
+         {645, 150, 32, 35, obstacleTexture2},
+         {645, 185, 32, 35, obstacleTexture3},
+         {610, 185, 32, 35, obstacleTexture2},
+         {575, 185, 32, 35, obstacleTexture3},
+         {540, 190, 32, 35, obstacleTexture2}},
+        {600, 120}));
+
+    if (!obstacleTexture1 || !obstacleTexture2 || !obstacleTexture3 || !obstacleTexture4)
+    {
         std::cerr << "Failed to load obstacle textures!" << std::endl;
     }
 }
-//hàm này dùng để khởi tạo level đầu tiên
+// hàm này dùng để khởi tạo level đầu tiên
 void Game::initLevel()
 {
     int size = levels.size();
