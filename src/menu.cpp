@@ -3,6 +3,8 @@
 #include "Header/renderer.hpp"
 #include <iostream>
 
+//Hàm contructor khởi tạo các biến cần thiết cho menu
+//Hàm destructor giải phóng các tài nguyên đã sử dụng trong menu
 Menu::Menu()
 {
     menubackgroundTexture = nullptr;
@@ -21,9 +23,10 @@ Menu::~Menu()
     cleanup();
 }
 
+//Hàm này dùng để khởi tạo menu
 bool Menu::init(SDL_Renderer *renderer)
 {
-    menubackgroundTexture = TextureManager::loadTexture("assets/menubackground.png", renderer);
+    menubackgroundTexture = TextureManager::loadTexture("assets/menubackground.jpg", renderer);
     if (!menubackgroundTexture)
     {
         std::cerr << "Failed to load menu background texture!" << std::endl;
@@ -56,6 +59,11 @@ bool Menu::init(SDL_Renderer *renderer)
     return true;
 }
 
+//Hàm này dùng để xử lý các sự kiện trong menu
+//Nếu người dùng nhấn nút play thì trả về MenuState::PLAY
+//Nếu người dùng nhấn nút exit thì trả về MenuState::EXIT
+//Nếu người dùng nhấn nút khác thì trả về MenuState::MAIN_MENU
+//Hàm này sẽ kiểm tra xem người dùng có nhấn nút nào không, nếu có thì sẽ trả về trạng thái tương ứng
 MenuState Menu::processEvents(SDL_Event &event)
 {
     if (event.type == SDL_QUIT)
@@ -95,6 +103,7 @@ MenuState Menu::processEvents(SDL_Event &event)
     return MenuState::MAIN_MENU;
 }
 
+//Hàm này dùng để render menu
 void Menu::render(SDL_Renderer *renderer)
 {
     SDL_RenderClear(renderer);
@@ -116,6 +125,8 @@ void Menu::render(SDL_Renderer *renderer)
         SDL_RenderCopy(renderer, exitbuttonTexture, NULL, &exitButtonRect);
     }
 }
+
+//Hàm này dùng để giải phóng các tài nguyên đã sử dụng trong menu
 void Menu::cleanup()
 {
     if (menubackgroundTexture)

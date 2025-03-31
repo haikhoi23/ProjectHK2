@@ -1,6 +1,7 @@
 #include "Header\renderer.hpp"
 #include  <iostream>
 
+// Hàm khởi tạo SDL và tạo cửa sổ và renderer
 bool Renderer::init(SDL_Window*& window, SDL_Renderer*& renderer, const char* title, int width, int height) {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "SDL_Init: %s\n", SDL_GetError());
@@ -18,6 +19,9 @@ bool Renderer::init(SDL_Window*& window, SDL_Renderer*& renderer, const char* ti
     }
     return true;
 }
+
+//Hàm giải phóng bộ nhớ và các tài nguyên đã sử dụng trong game
+//Hàm này sẽ được gọi khi game kết thúc
 void Renderer::cleanup(SDL_Window* window, SDL_Renderer* renderer) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

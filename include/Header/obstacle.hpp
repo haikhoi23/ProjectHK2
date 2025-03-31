@@ -2,6 +2,7 @@
 #define OBSTACLE_HPP
 #include <SDL.h>
 
+// Chướng ngại vật trong game
 struct Obstacle {
     int x , y;
     int width, height;

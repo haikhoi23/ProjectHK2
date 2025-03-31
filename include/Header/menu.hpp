@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 
+
+// Hàm này dùng để khởi tạo các trạng thái của menu
 enum class MenuState {
     MAIN_MENU,
     PLAY,

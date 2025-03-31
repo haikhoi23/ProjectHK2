@@ -4,6 +4,8 @@
 #include "Header/menu.hpp"
 #include <SDL.h>
 #include <SDL_image.h>
+
+//Hàm này dùng để khởi tạo game
 class Game{
     public:
         static inline constexpr int SCREEN_WIDTH = 800;
@@ -30,11 +32,13 @@ class Game{
         SDL_Texture* obstacleTexture1 = nullptr;
         SDL_Texture* obstacleTexture2 = nullptr;
         SDL_Texture* obstacleTexture3 = nullptr;
+        SDL_Texture* obstacleTexture4 = nullptr;
         SDL_Texture* arrowTexture = nullptr;
 
         Menu menu;
         MenuState menuState;
         float ballX, ballY, velocityX, velocityY, ballScale;
+        float MAX_VELOCITY;
         float holeX, holeY;
         bool dragging;
         int startX, startY;
