@@ -2,6 +2,7 @@
 #define GAME_HPP
 #include "Header/level.hpp"
 #include "Header/menu.hpp"
+#include "Header/ScoreManager.hpp"
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -37,16 +38,20 @@ class Game{
 
         Menu menu;
         MenuState menuState;
+
         float ballX, ballY, velocityX, velocityY, ballScale;
         float MAX_VELOCITY;
         float holeX, holeY;
         bool dragging;
         int startX, startY;
         float arrowX, arrowY, arrowAngle;
+
         vector<Level> levels;
         int currentLevel;
         vector<Obstacle> obstacles;
         int numObstacles;
+
+        ScoreManager scoreManager;
 
         void wallCollision();
         void holeCollision();

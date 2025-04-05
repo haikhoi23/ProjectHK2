@@ -1,7 +1,7 @@
 # Compiler and flags
 CXX       = g++
 CXXFLAGS  = -Wall -O2 -std=c++23 -Iinclude -Iinclude/SDL2 
-LDFLAGS := -Llib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+LDFLAGS   = -Llib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 # Directories
 SRCDIR    = src

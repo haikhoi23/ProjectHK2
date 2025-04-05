@@ -7,6 +7,8 @@
 #include <cmath>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
+#include <SDL_ttf.h>
 Game::Game()
 {
     ballX = 50;
@@ -68,7 +70,16 @@ bool Game::init()
     {
         std::cerr << "Failed to load obstacle textures!" << std::endl;
     }
-
+    if (TTF_Init() == -1)
+    {
+        std::cerr << "TTF_Init Error: " << TTF_GetError() << std::endl;
+        return false;
+    }
+    if (!scoreManager.init(renderer,"font/apercumovistarbold.ttf", 24))
+    {
+        std::cerr << "Failed to initialize ScoreManager!" << std::endl;
+        return false;
+    }
     menu.init(renderer);
 
     loadLevels();
@@ -145,6 +156,7 @@ void Game::ingameProcessEvents(SDL_Event &event)
         velocityX = (startX - endX) * 0.1f;
         velocityY = (startY - endY) * 0.1f;
         dragging = false;
+        scoreManager.addStroke(); // Tăng số lần đánh bóng
     }
 }
 
@@ -189,6 +201,7 @@ void Game::processEvents()
                 {
                     menu.setInterLevel(false); // Thoát khỏi trạng thái INTER_LEVEL
                     menuState = MenuState::MAIN_MENU;
+                    scoreManager.resetStroke(); // Đặt lại số lần đánh bóng
                 }
             }
             else if (newState == MenuState::EXIT)
@@ -305,6 +318,7 @@ void Game::render()
     {
         std::cerr << "Ball texture is null!" << std::endl;
     }
+    scoreManager.render(renderer, 10, 10); // Vẽ số lần đánh bóng ở góc trên bên trái
     SDL_RenderPresent(renderer);
 }
 
