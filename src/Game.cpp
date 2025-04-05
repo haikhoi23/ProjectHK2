@@ -84,7 +84,9 @@ void Game::run()
     while (!quit)
     {
         processEvents();
-        update();
+        if(menuState == MenuState::PLAY){
+            update();
+        }
         render();
         SDL_Delay(16);
     }
@@ -149,23 +151,59 @@ void Game::ingameProcessEvents(SDL_Event &event)
 // hàm này dùng để xử lý các sự kiện trong game
 void Game::processEvents()
 {
+    int size = levels.size();
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        if (menuState == MenuState::MAIN_MENU)
-        {
-            menuState = menu.processEvents(event);
-        }
-        if (menuState == MenuState::EXIT)
+        if (event.type == SDL_QUIT)
         {
             exit(0);
         }
-        else
+        if (menuState == MenuState::MAIN_MENU)
+        {
+            menuState = menu.processEvents(event);
+            if(menuState == MenuState::EXIT){
+                exit(0);
+            }
+        }
+        else if (menuState == MenuState::INTER_LEVEL)
+        {
+            // Xử lý giai đoạn INTER_LEVEL
+            MenuState newState = menu.processEvents(event);
+            if (newState == MenuState::PLAY)  // Chơi lại level
+            {
+                initLevel();
+                menu.setInterLevel(false); // Thoát khỏi trạng thái INTER_LEVEL
+                menuState = MenuState::PLAY;
+            }
+            else if (newState == MenuState::CONTINUE)  //Chuyển đến level tiếp theo
+            {
+                if (currentLevel + 1 < size)
+                {
+                    currentLevel++;  
+                    initLevel();
+                    menu.setInterLevel(false); // Thoát khỏi trạng thái INTER_LEVEL
+                    menuState = MenuState::PLAY;
+                }
+                else
+                {
+                    menu.setInterLevel(false); // Thoát khỏi trạng thái INTER_LEVEL
+                    menuState = MenuState::MAIN_MENU;
+                }
+            }
+            else if (newState == MenuState::EXIT)
+            {
+                exit(0);
+            }
+        }
+        else  // Khi ở trạng thái PLAY
         {
             ingameProcessEvents(event);
         }
     }
 }
+
+
 
 // hàm này dùng để cập nhật vị trí của bóng và xử lý va chạm giữa bóng và các đối tượng khác trong game
 void Game::update()
@@ -227,6 +265,13 @@ void Game::render()
         SDL_RenderPresent(renderer);
         return;
     }
+    else if(menuState == MenuState::INTER_LEVEL)
+    {
+        menu.render(renderer);
+        SDL_RenderPresent(renderer);
+        return;
+    }
+
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
     if (fabs(velocityX) < 0.1f && fabs(velocityY) < 0.1f)
@@ -304,7 +349,7 @@ void Game::holeCollision()
     float distance = sqrt(pow(ballCenterX - holeCenterX, 2) + pow(ballCenterY - holeCenterY, 2));
     float VELOCITY_THRESHOLD = 5.0f;
 
-    if (distance < holeRadius && fabs(velocityX) < VELOCITY_THRESHOLD && fabs(velocityY) < VELOCITY_THRESHOLD)
+    if (distance <= holeRadius && fabs(velocityX) < VELOCITY_THRESHOLD && fabs(velocityY) < VELOCITY_THRESHOLD)
     {
         if (ballScale > 0.3f)
         {
@@ -312,25 +357,18 @@ void Game::holeCollision()
             ballX = holeCenterX - (BALL_WIDTH * ballScale) / 2;
             ballY = holeCenterY - (BALL_HEIGHT * ballScale) / 2;
         }
-        else
+        else if (menuState != MenuState::INTER_LEVEL)
         {
-            currentLevel++;
-            int size = levels.size();
-            if (currentLevel < size)
-            {
-                initLevel();
-            }
-            else
-            {
-                currentLevel = 0;
-                initLevel();
-            }
+            menuState = MenuState::INTER_LEVEL;  // Chuyển sang trạng thái INTER_LEVEL
+            menu.setInterLevel(true);
             velocityX = 0;
             velocityY = 0;
-            ballScale = 1.0f;
         }
     }
 }
+
+
+
 // hàm này dùng để xử lý va chạm giữa bóng và các chướng ngại vật
 void Game::obstacleCollision()
 {
