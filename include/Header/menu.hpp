@@ -26,6 +26,8 @@ public:
 
     void render(SDL_Renderer* renderer);
 
+    void reset();
+
     void cleanup();
 private:
     MenuState menuState;

@@ -199,9 +199,9 @@ void Game::processEvents()
                 }
                 else
                 {
-                    menu.setInterLevel(false); // Thoát khỏi trạng thái INTER_LEVEL
-                    menuState = MenuState::MAIN_MENU;
+                    menu.reset(); // Đặt lại trạng thái menu
                     scoreManager.resetStroke(); // Đặt lại số lần đánh bóng
+                    currentLevel = 0; // Đặt lại level về 0  
                 }
             }
             else if (newState == MenuState::EXIT)
@@ -215,8 +215,6 @@ void Game::processEvents()
         }
     }
 }
-
-
 
 // hàm này dùng để cập nhật vị trí của bóng và xử lý va chạm giữa bóng và các đối tượng khác trong game
 void Game::update()

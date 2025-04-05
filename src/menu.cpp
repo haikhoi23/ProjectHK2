@@ -236,6 +236,16 @@ void Menu::render(SDL_Renderer* renderer)
     }
 }
 
+void Menu::reset()
+{
+    playButtonPressed = false;
+    exitButtonPressed = false;
+    continueButtonPressed = false;
+    replayButtonPressed = false;
+    isInterLevel = false;
+    menuState = MenuState::MAIN_MENU;
+}
+
 // Hàm này dùng để giải phóng các tài nguyên đã sử dụng trong menu
 void Menu::cleanup()
 {
