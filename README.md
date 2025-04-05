@@ -1,3 +1,6 @@
+BÁO CÁO BÀI TẬP LỚP MÔN LẬP TRÌNH NÂNG CAO
+Sinh Mã số Sinh viên: 24020183        Họ và Tên: Dương Hải Khôi
+Lớp Môn học: INT 2215 - 3
 Thông tin về game: link (github, google doc, youtube), game tham khảo (link, miêu tả) 
 Tên game: MINIGOLF
 Link GitHub :  https://github.com/haikhoi23/ProjectHK2
@@ -29,12 +32,14 @@ Xử lý va chạm : Đảm bảo bóng phản ứng đúng khi va chạm với 
 Quản lý level: Tải và khởi tạo các level trong trò chơi.
 Kết thúc trò chơi: Giải phóng tài nguyên và thoát khỏi trò chơi.
 Nguồn tham khảo và lấy dữ liệu: âm thanh, đồ họa, chatgpt, 
-Tài nguyên đồ họa ( bóng, lỗ, chướng ngại vật, mũi tên chỉ hướng ) :
+Tài nguyên đồ họa ( bóng, lỗ, chướng ngại vật ) :
 https://github.com/PolyMarsDev/Twini-Golf/tree/main/res/gfx
-Nền màn hình chơi, màn hình main menu, nút bấm tự thiết kế.
+Tài nguyên đồ họa ( nút bấm font hiển thị tính điểm) :
+https://prinbles.itch.io/silent
+	    https://font.download/font/apercu-movistar
+Nền màn hình chơi, màn hình main menu tự thiết kế.
 Các thông tin khác (nếu cần)
 Hướng dẫn chơi game MINIGOLF : 
-Sử dụng chuột trái để kéo thả bóng gôn trên màn hình.
+Sử dụng chuột trái để kéo thả bóng gôn trên màn hình, mỗi lần kéo thả được tính là 1 lần vụt bóng.
 Bóng sẽ đi theo hướng mũi tên gắn với bóng.
-Cố gắng đưa trái bóng vào trong lỗ để chơi màn tiếp theo.
-
+Cố gắng đưa trái bóng vào trong lỗ để chơi màn tiếp theo
