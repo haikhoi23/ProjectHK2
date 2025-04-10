@@ -80,6 +80,16 @@ bool Game::init()
         std::cerr << "Failed to initialize ScoreManager!" << std::endl;
         return false;
     }
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+    {
+        std::cerr << "Mix_OpenAudio Error: " << Mix_GetError() << std::endl;
+        return false;
+    }
+    if (!soundManager.loadSounds())
+    {
+        std::cerr << "Failed to load sound files!" << std::endl;
+        return false;
+    }
     menu.init(renderer);
 
     loadLevels();
@@ -116,6 +126,8 @@ void Game::cleanup()
     SDL_DestroyTexture(arrowTexture);
     menu.cleanup();
     Renderer::cleanup(window, renderer);
+    soundManager.cleanup();
+    scoreManager.cleanup();
 }
 
 // hàm này dùng để xử lý các sự kiện trong game
@@ -157,6 +169,7 @@ void Game::ingameProcessEvents(SDL_Event &event)
         velocityY = (startY - endY) * 0.1f;
         dragging = false;
         scoreManager.addStroke(); // Tăng số lần đánh bóng
+        soundManager.playChargeSound(); // Phát âm thanh khi đánh bóng
     }
 }
 
@@ -329,24 +342,28 @@ void Game::wallCollision()
     {
         ballX = 0;
         velocityX = -velocityX * BOUNCE;
+        soundManager.playCollisionSound(); // Phát âm thanh khi va chạm với tường
     }
 
     if (ballX + BALL_WIDTH > SCREEN_WIDTH)
     {
         ballX = SCREEN_WIDTH - BALL_WIDTH;
         velocityX = -velocityX * BOUNCE;
+        soundManager.playCollisionSound(); // Phát âm thanh khi va chạm với tường
     }
 
     if (ballY < 0)
     {
         ballY = 0;
         velocityY = -velocityY * BOUNCE;
+        soundManager.playCollisionSound(); // Phát âm thanh khi va chạm với tường
     }
 
     if (ballY + BALL_HEIGHT > SCREEN_HEIGHT)
     {
         ballY = SCREEN_HEIGHT - BALL_HEIGHT;
         velocityY = -velocityY * BOUNCE;
+        soundManager.playCollisionSound(); // Phát âm thanh khi va chạm với tường
     }
 }
 // hàm này dùng để xử lý va chạm giữa bóng và lỗ
@@ -368,6 +385,7 @@ void Game::holeCollision()
             ballScale *= 0.9f;
             ballX = holeCenterX - (BALL_WIDTH * ballScale) / 2;
             ballY = holeCenterY - (BALL_HEIGHT * ballScale) / 2;
+            soundManager.playHoleSound(); // Phát âm thanh khi bóng vào lỗ
         }
         else if (menuState != MenuState::INTER_LEVEL)
         {
@@ -405,6 +423,7 @@ void Game::obstacleCollision()
                 {
                     ballX += overlapX;
                 }
+                soundManager.playCollisionSound(); // Phát âm thanh khi va chạm với chướng ngại vật
                 velocityX = -velocityX * BOUNCE;
             }
             else
@@ -412,12 +431,13 @@ void Game::obstacleCollision()
                 if (velocityY > 0)
                 {
                     ballY -= overlapY;
-                }
+                }    
                 else
                 {
                     ballY += overlapY;
                 }
                 velocityY = -velocityY * BOUNCE;
+                soundManager.playCollisionSound(); // Phát âm thanh khi va chạm với chướng ngại vật
             }
         }
     }

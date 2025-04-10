@@ -16,6 +16,7 @@ public:
     void resetStroke();
     void render(SDL_Renderer *renderer, int x, int y);
     int getScore() const;
+    void cleanup();
 private:
     int strokes;
     TTF_Font *font;

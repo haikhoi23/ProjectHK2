@@ -60,3 +60,10 @@ void ScoreManager::render(SDL_Renderer* renderer, int x, int y) {
     SDL_DestroyTexture(textTexture);
     SDL_FreeSurface(textSurface);
 }
+
+void ScoreManager::cleanup() {
+    if (font) {
+        TTF_CloseFont(font);
+        font = nullptr;
+    }
+}

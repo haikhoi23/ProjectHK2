@@ -3,6 +3,7 @@
 #include "Header/level.hpp"
 #include "Header/menu.hpp"
 #include "Header/ScoreManager.hpp"
+#include "Header/SoundManager.hpp"
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -52,6 +53,7 @@ class Game{
         int numObstacles;
 
         ScoreManager scoreManager;
+        SoundManager soundManager;
 
         void wallCollision();
         void holeCollision();
