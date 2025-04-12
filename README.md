@@ -37,6 +37,7 @@ https://github.com/PolyMarsDev/Twini-Golf/tree/main/res/gfx
 Tài nguyên đồ họa ( nút bấm font hiển thị tính điểm) :
 https://prinbles.itch.io/silent
 	    https://font.download/font/apercu-movistar
+Âm thanh trong game : https://github.com/PolyMarsDev/Twini-Golf/tree/main/res/sfx
 Nền màn hình chơi, màn hình main menu tự thiết kế.
 Các thông tin khác (nếu cần)
 Hướng dẫn chơi game MINIGOLF : 
