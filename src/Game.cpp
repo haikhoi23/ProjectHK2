@@ -542,9 +542,6 @@ void Game::loadLevels()
          {330, 335, 64, 67, obstacleTexture1},
          {400, 305, 64, 67, obstacleTexture4},
          {460, 270, 64, 67, obstacleTexture4},
-         {300, 245, 32, 35, obstacleTexture2},
-         {395, 270, 32, 35, obstacleTexture3},
-         {420, 185, 32, 35, obstacleTexture2},
          {540, 75, 32, 35, obstacleTexture3},
          {540, 40, 32, 35, obstacleTexture2},
          {575, 40, 32, 35, obstacleTexture3},
@@ -556,7 +553,7 @@ void Game::loadLevels()
          {645, 185, 32, 35, obstacleTexture3},
          {610, 185, 32, 35, obstacleTexture2},
          {575, 185, 32, 35, obstacleTexture3},
-         {540, 190, 32, 35, obstacleTexture2}},
+         },
         {600, 120}));
 
     if (!obstacleTexture1 || !obstacleTexture2 || !obstacleTexture3 || !obstacleTexture4)
